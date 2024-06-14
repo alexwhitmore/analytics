@@ -1,21 +1,21 @@
 import { useEffect } from 'react'
-import { pageview } from '../../src/utils/analytics'
+import { trackPageView, trackUniqueVisitor } from '../../src/utils/analytics'
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000'
 
-function Analytics(
-  props: any & { framework?: string; path?: string | null }
-): null {
+function Analytics(): null {
   useEffect(() => {
-    if (props.route && props.path) {
-      pageview({
-        route: props.route,
-        path: props.path,
-        url: API_BASE_URL,
-      })
-    }
-  }, [props.route, props.path])
+    const route = window.location.pathname
+    const path = window.location.href
+
+    trackUniqueVisitor({ url: API_BASE_URL })
+    trackPageView({
+      route,
+      path,
+      url: API_BASE_URL,
+    })
+  }, [])
 
   return null
 }

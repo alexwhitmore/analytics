@@ -3,6 +3,7 @@ import {
   getEvent,
   getEvents,
   recordPageview,
+  recordUniqueVisitor,
   trackEvent,
 } from '../controllers/eventController'
 
@@ -12,5 +13,6 @@ router.post('/track', trackEvent)
 router.get('/events', getEvents)
 router.get('/events/:id', getEvent)
 router.post('/pageview', recordPageview)
+router.post('/unique-visitor', recordUniqueVisitor)
 
 export default router

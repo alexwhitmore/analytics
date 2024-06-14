@@ -52,9 +52,7 @@ export const recordPageview = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  console.log('Received pageview request:', req.body)
-
-  const { route, path } = req.body
+  const { route, path, sessionId } = req.body
 
   if (!route || !path) {
     console.error('Route and path are required')
@@ -63,13 +61,36 @@ export const recordPageview = async (
   }
 
   try {
-    const pageview = await createEvent({
+    const pageView = await createEvent({
       eventName: 'pageview',
-      properties: { route, path },
+      properties: { route, path, sessionId },
     })
-    res.status(201).json(pageview)
+    res.status(201).json(pageView)
   } catch (error) {
     console.error('Error recording pageview:', error)
+    res.status(500).send('Internal Server Error')
+  }
+}
+
+export const recordUniqueVisitor = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { sessionId } = req.body
+
+  if (!sessionId) {
+    res.status(400).send('Session ID is required')
+    return
+  }
+
+  try {
+    const uniqueVisitor = await createEvent({
+      eventName: 'uniqueVisitor',
+      properties: { sessionId },
+    })
+    res.status(201).json(uniqueVisitor)
+  } catch (error) {
+    console.error('Error recording unique visitor:', error)
     res.status(500).send('Internal Server Error')
   }
 }

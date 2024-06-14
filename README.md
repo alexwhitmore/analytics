@@ -2,7 +2,7 @@
 
 An open-source, privacy-first Google Analytics alternative.
 
-## Page Views
+## Page View Features
 
 1. Session management
 

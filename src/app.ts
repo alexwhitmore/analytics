@@ -1,4 +1,3 @@
-import bodyParser from 'body-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
@@ -15,7 +14,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-app.use(bodyParser.json())
+app.use(express.json())
 app.use('/api', eventRoutes)
 
 export default app
